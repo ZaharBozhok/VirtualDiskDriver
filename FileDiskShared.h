@@ -1,0 +1,32 @@
+#ifndef _FILE_DISK_
+
+#define _FILE_DISK_
+#define FILE_DISK_POOL_TAG 'ksiD'
+#ifndef __T
+#ifdef _NTDDK_
+#define __T(x) L ## x
+#else
+#define __T(x) x
+#endif
+#endif
+#ifndef _T
+#define _T(x) __T(x)
+#endif)
+#define DEVICE_BASE_NAME	_T("\\FileDisk")
+#define DEVICE_DIR_NAME		_T("\\Device")	DEVICE_BASE_NAME
+#define DEVICE_NAME_PREFIX	DEVICE_DIR_NAME	DEVICE_BASE_NAME
+
+#define IOCTL_FILE_DISK_OPEN_FILE	CTL_CODE(FILE_DEVICE_DISK, 0x800, METHOD_BUFFERED, FILE_READ_ACCESS | FILE_WRITE_ACCESS)
+#define IOCTL_FILE_DISK_CLOSE_FILE	CTL_CODE(FILE_DEVICE_DISK, 0x801, METHOD_BUFFERED, FILE_READ_ACCESS | FILE_WRITE_ACCESS)
+
+#define MAX_PASSWORD_SIZE 16
+
+typedef struct _OPEN_FILE_INFORMATION {
+	LARGE_INTEGER	FileSize;
+	UCHAR			DriveLetter;
+	USHORT			FileNameLength;
+	USHORT			PasswordLength;
+	CHAR			Password[MAX_PASSWORD_SIZE];
+	WCHAR			FileName[1];
+}OPEN_FILE_INFORMATION, *POPEN_FILE_INFORMATION;
+#endif 
